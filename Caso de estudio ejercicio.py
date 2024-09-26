@@ -1,4 +1,3 @@
-
 from abc import ABC, abstractmethod
 
 class Prestamo(ABC):
@@ -76,41 +75,30 @@ class DVD(Material, Prestamo):
 
 def obtener_numero(mensaje):
     while True:
-        try:
-            return int(input(mensaje))
-        except ValueError:
+        valor = input(mensaje)
+        if valor.isdigit():  # Verifica si el valor es numérico
+            return int(valor)
+        else:
             print("Por favor, ingresa un número válido.")
-
-def listar_materiales_prestados(materiales):
-    prestados = [material for material in materiales if isinstance(material, Prestamo) and material.prestado]
-    if prestados:
-        print("Materiales prestados:")
-        for material in prestados:
-            material.mostrar_informacion()
-    else:
-        print("No hay materiales prestados en este momento.")
 
 def menu():
     materiales = []
-
     while True:
-        print("\n--- Menú de Biblioteca ---")
+        print("\n--- Menú ---")
         print("1. Agregar Libro")
         print("2. Agregar Revista")
         print("3. Agregar DVD")
-        print("4. Mostrar todos los materiales")
-        print("5. Prestar material")
-        print("6. Devolver material")
-        print("7. Listar materiales prestados")
-        print("8. Salir")
-
+        print("4. Mostrar Información de Materiales")
+        print("5. Prestar Material")
+        print("6. Devolver Material")
+        print("7. Salir")
         opcion = input("Elige una opción: ")
 
         if opcion == '1':
             titulo = input("Ingresa el título del libro: ")
             autor = input("Ingresa el autor del libro: ")
             año = obtener_numero("Ingresa el año del libro: ")
-            num_paginas = obtener_numero("Ingresa el número de páginas: ")
+            num_paginas = obtener_numero("Ingresa el número de páginas del libro: ")
             libro = Libro(titulo, autor, año, num_paginas)
             materiales.append(libro)
             print(f"Libro '{titulo}' agregado.")
@@ -165,9 +153,6 @@ def menu():
                 print("Material no encontrado.")
 
         elif opcion == '7':
-            listar_materiales_prestados(materiales)
-
-        elif opcion == '8':
             print("Saliendo...")
             break
 
